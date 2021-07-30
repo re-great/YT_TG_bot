@@ -63,9 +63,7 @@ def playlist_menu(cid):
 		print(str(request['items'][i]['id']) , " is plid " , i)
 		b = types.InlineKeyboardButton(request['items'][i]['snippet']['title'] , callback_data = str(request['items'][i]['id']) + "*#" + str(cid))
 		keyboard.add(b)
-		
-		#pl_titles.append(request['items'][i]['snippet']['title'])
-		#pl_ids.append(request['items'][i]['id'])
+
 		
 		print(request['items'][i]['snippet']['title'])
 	
@@ -176,7 +174,7 @@ def ytchannelfromurl(message):
 	usable = info['items']
 
 	if(len(info['items']) == 0):
-		bot.reply_to(message , "abe saale abhi start kiya hu video ki link de chup chap ,kaha se aati re itni shahanpatti")
+		bot.reply_to(message , "Unrecognised link , send /ytinfo YT VIDEO LINK")
 
 	else:
 		cid = str(usable[0]['snippet']['channelId'])
@@ -195,7 +193,7 @@ def ytchannelfromurl(message):
 
 	
 ######################  CALLBACK QUERIES #################################################
-#@bot.callback_query_handler(lambda query : (lambda x: x in query.data , ['playlist' , 'SUBS' , 'top vids' , 'BACKTOMAIN' , 'more' , 'PLID']))
+
 @bot.callback_query_handler(lambda query : "*#" in query.data )
 def reply_playlist(query):
 
@@ -207,10 +205,6 @@ def reply_playlist(query):
 		bot.edit_message_text(chat_id=query.message.chat.id, message_id=query.message.message_id, text="Top playlists", reply_markup=playlist_menu(cid))
 		bot.answer_callback_query(query.id , text = "done")
 
-	# elif ('SUBS' in query.data):
-
-	# 	bot.edit_message_text(chat_id=query.message.chat.id, message_id=query.message.message_id, text="Total Subs", reply_markup=subscriber_menu(cid))
-	# 	bot.answer_callback_query(query.id , text = "done")
 
 	elif ('top vids' in query.data):
 		bot.edit_message_text(chat_id=query.message.chat.id, message_id=query.message.message_id, text="TOP videos", reply_markup=topvids_menu(cid))
@@ -244,18 +238,6 @@ def reply_playlist(query):
 		bot.answer_callback_query( query.id , text = "NO further option right now" , show_alert = True)
 
 
-# @bot.callback_query_handler(lambda query : query.data.startswith("*#"))
-# def playlists_callbacks(query):
-
-# 	pl_id = query.data.split("*#")[1]
-
-# 	print(pl_id , " is playlis id")
-
-# 	bot.answer_callback_query(query.id , text = "abhi itna hi hua hai bhai")
-
-
-
-
 
 while True:
 	try:
@@ -268,90 +250,3 @@ while True:
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-# @bot.message_handler(commands = ['markup'])
-# def markup_handler (message):
-
-
-# 	markup = types.InlineKeyboardMarkup()
-# 	markup.row_width = 2
-	
-
-# 	markup.add(types.InlineKeyboardButton("Playlists" , callback_data = "playlist") , types.InlineKeyboardButton("Subs count" , callback_data = "subscriber") ,types.InlineKeyboardButton('top videos' , callback_data = "3"))
-
-# 	bot.send_message(message.chat.id , 'choose further' , reply_markup=markup)
-
-
-
-
-
-# @bot.callback_query_handler(lambda query : query.data == "b3")
-# def func_callback(query):
-
-# 	print("here")
-
-	
-# 	chatID = query.message.chat.id
-# 	msgID = query.message.message_id
-	
-
-
-# 	mark = types.InlineKeyboardMarkup()
-# 	mark.row_width = 2
-# 	b1 = types.InlineKeyboardButton("vwd1" , callback_data = "v1")
-# 	b2 = types.InlineKeyboardButton("vww2" , callback_data = "v2")
-# 	b3 = types.InlineKeyboardButton("v3casc" , callback_data = "v3")
-
-# 	mark.add(b1 , b2 , b3)
-
-# 	print('final')
-# 	bot.edit_message_text(chat_id=query.message.chat.id, message_id=query.message.message_id, text="X", reply_markup=mark)
-
-
-
-
-
-
-
-
-
-####################################################### old version###########################
-
-# @bot.message_handler(func = lambda msg: msg.text is not None and '@' in msg.text)
-# def prof_link (message):
-	
-# 	splits = message.text.split()
-# 	str = find_start(splits)
-
-# 	if(str == 0):
-# 		bot.reply_to(message,r"invalid format , send /insta @username")
-# 	else:
-# 		bot.reply_to(message , fr'https://www.instagram.com/{str[1: ]}/')
-
-# @bot.message_handler(commands = ['insta'])
-# def send_prof(message):
-	
-# 	if(message.text is None ):
-		
-# 		pass
-	
-# 	else:
-
-# 		finder = message.text.split()
-# 		str = find_start (finder)
-
-# 		if(str == "0"):
-# 			bot.reply_to(message,r"invalid format , send /insta @username")
-# 		else:
-# 			bot.reply_to(message , fr'https://www.instagram.com/{str[1: ]}/')
